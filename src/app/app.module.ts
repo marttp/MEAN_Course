@@ -1,18 +1,50 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { 
+  MatInputModule,
+  MatCardModule, 
+  MatButtonModule,
+  MatToolbarModule,
+  MatExpansionModule
+} from '@angular/material';
 import { NgModule } from '@angular/core';
+
+// Form module for interact with client
+import { FormsModule } from '@angular/forms';
+
+// HTTP connect built in function
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-
+import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { HeaderComponent } from './header/header.component';
+import { PostListComponent } from './posts/post-list/post-list.component';
+// import { PostsService } from './posts/posts.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      PostCreateComponent,
+      HeaderComponent,
+      PostListComponent
+   ],
+   imports: [
+      BrowserModule,
+      FormsModule,
+      BrowserAnimationsModule,
+      MatInputModule,
+      MatCardModule,
+      MatButtonModule,
+      MatToolbarModule,
+      MatExpansionModule,
+      HttpClientModule
+   ],
+   providers: [
+    //  PostsService
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

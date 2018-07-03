@@ -1,0 +1,22 @@
+<!-- # is a local reference-->
+<!-- <textarea name="message" id="sms" rows="10" [value]="newPost" #postInput> -->
+
+<mat-card>
+  <form (submit)="onAddPost(postFrom)" #postFrom="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="Title" type="text" name="title" ngModel required minlength="5" #title="ngModel">
+      <mat-error *ngIf="title.invalid">Please enter title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Insert your content..." name="content" id="sms" rows="10" ngModel required #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please enter content</mat-error>
+
+    </mat-form-field>
+    <!-- <button 
+            mat-raised-button
+            color="accent"
+            (click)="onAddPost()">Post</button> -->
+    <button mat-raised-button color="accent" type="submit">Post</button>
+  </form>
+
+</mat-card>
