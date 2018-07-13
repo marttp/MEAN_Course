@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+const Post = require('./models/post.model')
+
 app.use((req,res,next) => {
     // allow access resource
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,9 +24,14 @@ app.use((req, res, next) => {
     next();
 })
 
+// AIixP5AcZd0F4Sf8
 
 app.post('/api/posts',(req,res,next) => {
-    const post = req.body;
+    // const post = req.body;
+    const post = new Post({
+        title: req.body.title,
+        content: req.body.content
+    })
     console.log(post);
     res.status(201).json({
         message:'Post added successfully'
