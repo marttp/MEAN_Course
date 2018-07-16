@@ -2,6 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongodb.net/post?retryWrites=true')
+    .then(()=>{
+        console.log('Mongoose Connect to Mongo Atlas');
+    })
+    .catch(()=>{
+        console.log('Not connect to Mongo Atlas');
+    })
+// AIixP5AcZd0F4Sf8
 const Post = require('./models/post.model')
 
 app.use((req,res,next) => {
@@ -24,7 +33,6 @@ app.use((req, res, next) => {
     next();
 })
 
-// AIixP5AcZd0F4Sf8
 
 app.post('/api/posts',(req,res,next) => {
     // const post = req.body;
@@ -33,9 +41,20 @@ app.post('/api/posts',(req,res,next) => {
         content: req.body.content
     })
     console.log(post);
-    res.status(201).json({
-        message:'Post added successfully'
-    });
+    post.save()
+    .then(result => {
+        console.log(result);
+        res.status(201).json({
+            message:'Post added successfully',
+            postId: result._id
+        });
+    })
+    .catch(err => {
+        res.status(400).json({
+            message:'Add unsuccessful'
+        });
+    })
+
 });
 
 app.get('/api/posts',(req,res,next) => {
@@ -43,32 +62,63 @@ app.get('/api/posts',(req,res,next) => {
     // res.send('Hello from express');
 
     //return json data
-    const posts = [
-        {
-            id:'test12345',
-            title:'First server-side-post',
-            content: 'This is coming from the server 1!'
-        },
-        {
-            id:'test22345',
-            title:'Second server-side-post',
-            content: 'This is coming from the server 2!'
-        },
-        {
-            id:'test32345',
-            title:'Third server-side-post',
-            content: 'This is coming from the server 3!'
-        }
-    ];
+
+
+    // const posts = [
+    //     {
+    //         id:'test12345',
+    //         title:'First server-side-post',
+    //         content: 'This is coming from the server 1!'
+    //     },
+    //     {
+    //         id:'test22345',
+    //         title:'Second server-side-post',
+    //         content: 'This is coming from the server 2!'
+    //     },
+    //     {
+    //         id:'test32345',
+    //         title:'Third server-side-post',
+    //         content: 'This is coming from the server 3!'
+    //     }
+    // ];
+
+
 
     //just pass the json
     // res.json(posts);
 
+    Post.find().exec()
+    .then(documents => {
+        console.log(documents);
+        // const posts = documents;
+        res.status(200).json({
+            message: 'Posts fetched succesfully!',
+            posts: documents
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json({
+            message: 'Error for execute posts!',
+        });
+    })
     //pass modify type of json
-    res.status(200).json({
-        message: 'Posts fetched succesfully!',
-        posts: posts
-    });
+
 });
+
+
+app.delete('/api/posts/:id',(req,res,next)=>{
+    // console.log(req.params.id);
+    Post.deleteOne({ _id: req.params.id })
+    .then(result => {
+        console.log(result);
+        res.status(200).json({
+            message: 'Post deleted'
+        });
+    });
+
+})
+
+
 
 module.exports = app;
