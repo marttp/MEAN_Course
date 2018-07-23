@@ -111,10 +111,10 @@ app.get('/api/post/:id',(req,res,next) => {
     Post.findById(req.params.id)
     .then( post => {
        if(post){
-
+            res.status(200).json(post);
        } else {
             res.status(400).json({
-                message: 'Error for execute posts!',
+                message: 'Post not found!',
             });       
         }
     })
