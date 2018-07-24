@@ -2,7 +2,8 @@
 <!-- <textarea name="message" id="sms" rows="10" [value]="newPost" #postInput> -->
 
 <mat-card>
-  <form (submit)="onSavePost(postFrom)" #postFrom="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSavePost(postFrom)" #postFrom="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input matInput placeholder="Title" type="text" name="title" [ngModel]="post?.title" required minlength="5" #title="ngModel">
       <mat-error *ngIf="title.invalid">Please enter title</mat-error>
