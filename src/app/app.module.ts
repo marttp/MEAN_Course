@@ -11,7 +11,8 @@ import {
 import { NgModule } from '@angular/core';
 
 // Form module for interact with client
-import { FormsModule } from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // HTTP connect built in function
 import { HttpClientModule } from '@angular/common/http';
@@ -35,7 +36,8 @@ import { AppRoutingModule } from './app.routing.module';
       BrowserModule,
       // add app routing module
       AppRoutingModule,
-      FormsModule,
+      ReactiveFormsModule,
+      // FormsModule,
       BrowserAnimationsModule,
       MatInputModule,
       MatCardModule,
