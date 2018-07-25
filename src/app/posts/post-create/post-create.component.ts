@@ -3,7 +3,9 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Post } from '../post.model';
-import { FormGroup, FormControl, Validator, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { mimeType } from './mime-type.validator';
+
 // args - JS Obj
 @Component({
   selector: 'app-post-create',
@@ -20,6 +22,7 @@ export class PostCreateComponent implements OnInit {
   private postId: String;
   isLoading = false;
   form: FormGroup;
+  imagePreview: String;
 
   // @Output() postCreated = new EventEmitter<Post>();
 
@@ -34,7 +37,11 @@ export class PostCreateComponent implements OnInit {
       title: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
       }),
-      content: new FormControl(null, { validators: [Validators.required] })
+      content: new FormControl(null, { validators: [Validators.required] }),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
     });
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -76,6 +83,20 @@ export class PostCreateComponent implements OnInit {
   // onAddPost(){
   //   this.newPost = this.enteredContent;
   // }
+
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    // reevaluate when change
+    this.form.get('image').updateValueAndValidity();
+    // console.log(file);
+    // console.log(this.form);
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
   onSavePost() {
     if (this.form.invalid) {
