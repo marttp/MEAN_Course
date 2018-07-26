@@ -1,6 +1,6 @@
 export interface Post {
-    id: String;
-    title: String;
-    content: String;
-    imagePath: String;
+    id: string;
+    title: string;
+    content: string;
+    imagePath: string;
 }

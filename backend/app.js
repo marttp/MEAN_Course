@@ -12,6 +12,8 @@ mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongod
     })
 // AIixP5AcZd0F4Sf8
 
+const path = require('path');
+
 const postsRoutes = require('./routes/posts')
 
 app.use((req,res,next) => {
@@ -29,6 +31,8 @@ app.use((req,res,next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 
+// any request targeting to fetch files
+app.use("/images", express.static(path.join('backend/images')));
 // app.use((req, res, next) => {
 //     console.log('First Middleware');
 //     next();
