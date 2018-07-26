@@ -87,19 +87,28 @@ router.get('', (req, res, next) => {
   //         content: 'This is coming from the server 3!'
   //     }
   // ];
-
-
-
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const postQuery = Post.find();
+  let fetchedPosts;
   //just pass the json
   // res.json(posts);
-
-  Post.find().exec()
+  if (pageSize && currentPage) {
+    postQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+  postQuery.exec()
     .then(documents => {
-      console.log(documents);
+      fetchedPosts = documents;
+      return Post.count();
+    })
+    .then(count => {
       // const posts = documents;
       res.status(200).json({
         message: 'Posts fetched succesfully!',
-        posts: documents
+        posts: fetchedPosts,
+        maxPosts: count
       });
     })
     .catch(err => {
