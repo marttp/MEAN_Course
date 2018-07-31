@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongodb.net/post?retryWrites=true',{ useNewUrlParser: true })
+mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongodb.net/post',{ useNewUrlParser: true })
     .then(()=>{
         console.log('Mongoose Connect to Mongo Atlas');
     })
@@ -14,7 +14,9 @@ mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongod
 
 const path = require('path');
 
-const postsRoutes = require('./routes/posts')
+const postsRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
+
 
 app.use((req,res,next) => {
     // allow access resource
@@ -38,6 +40,6 @@ app.use("/images", express.static(path.join('backend/images')));
 //     next();
 // })
 app.use("/api/posts", postsRoutes);
-
+app.use("/api/users", userRoutes);
 
 module.exports = app;
