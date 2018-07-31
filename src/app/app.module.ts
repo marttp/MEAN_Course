@@ -1,3 +1,4 @@
+import { AuthInterceptor } from './auth/auth-intercepter';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
@@ -16,7 +17,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // HTTP connect built in function
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ import { SignupComponent } from './auth/signup/signup.component';
    ],
    providers: [
     //  PostsService
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
    ],
    bootstrap: [
       AppComponent
