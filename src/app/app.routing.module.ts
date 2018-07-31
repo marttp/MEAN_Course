@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { AuthGuard } from './auth/auth.guard';
 
 // Set name of route
 // array of js object
@@ -17,7 +18,8 @@ const routes: Routes = [
     },
     {
         path: 'create',
-        component: PostCreateComponent
+        component: PostCreateComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'edit/:postId',
@@ -36,7 +38,8 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [AuthGuard]
 })
 
 
