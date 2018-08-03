@@ -5,6 +5,10 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+
+import { environment } from './../../environments/environment';
+const BACKEND_URL = environment.apiUrl + '/posts/';
+
 @Injectable({ providedIn: 'root' })
 export class PostsService {
   private posts: Post[] = [];
@@ -17,7 +21,7 @@ export class PostsService {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
-        'http://localhost:3000/api/posts' + queryParams
+        BACKEND_URL + queryParams
       )
       // Transform response data to application such as _id => id
       .pipe(
@@ -58,7 +62,7 @@ export class PostsService {
       content: string;
       imagePath: string;
       creator: string;
-    }>('http://localhost:3000/api/posts/' + id);
+    }>(BACKEND_URL + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -76,7 +80,7 @@ export class PostsService {
     postData.append('image', image, title);
     this.http
       .post<{ message: string; post: Post }>(
-        'http://localhost:3000/api/posts',
+        BACKEND_URL,
         postData
       )
       .subscribe(responseData => {
@@ -115,7 +119,7 @@ export class PostsService {
       };
     }
     this.http
-      .put('http://localhost:3000/api/posts/' + id, postData)
+      .put(BACKEND_URL + id, postData)
       .subscribe(response => {
         // const updatedPosts = [...this.posts];
         // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
@@ -142,6 +146,6 @@ export class PostsService {
     //     this.postsUpdated.next([...this.posts]);
     //   });
       return this.http
-      .delete('http://localhost:3000/api/posts/' + postId);
+      .delete(BACKEND_URL + postId);
   }
 }

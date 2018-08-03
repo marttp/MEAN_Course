@@ -1,65 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MatInputModule,
-  MatCardModule,
-  MatButtonModule,
-  MatToolbarModule,
-  MatExpansionModule,
-  MatProgressSpinnerModule,
-  MatPaginatorModule,
-  MatDialogModule
-} from '@angular/material';
 import { NgModule } from '@angular/core';
-
-// Form module for interact with client
-// import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AngularMaterialModule } from './angular-material.module';
 
 // HTTP connect built in function
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-
 import { AppComponent } from './app.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from './app.routing.module';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { ErrorComponent } from './error/error.component';
 
 // import { PostsService } from './posts/posts.service';
 import { ErrorInterceptor } from './error-interceptor';
 import { AuthInterceptor } from './auth/auth-intercepter';
 
+import { PostModule } from './posts/post.module';
+// import { AuthModule } from './auth/auth.module';
+
 @NgModule({
    declarations: [
       AppComponent,
-      PostCreateComponent,
       HeaderComponent,
-      PostListComponent,
-      LoginComponent,
-      SignupComponent,
       ErrorComponent
    ],
    imports: [
       BrowserModule,
       // add app routing module
       AppRoutingModule,
-      ReactiveFormsModule,
       // FormsModule,
       BrowserAnimationsModule,
-      MatInputModule,
-      MatCardModule,
-      MatButtonModule,
-      MatToolbarModule,
-      MatExpansionModule,
-      MatProgressSpinnerModule,
-      MatPaginatorModule,
-      MatDialogModule,
-      FormsModule,
+      AngularMaterialModule,
       HttpClientModule,
+      PostModule,
+      // AuthModule
    ],
    providers: [
     //  PostsService
@@ -73,4 +47,4 @@ import { AuthInterceptor } from './auth/auth-intercepter';
      ErrorComponent
    ]
 })
-export class AppModule { }
+export class AppModule {}

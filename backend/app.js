@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://marttp:AIixP5AcZd0F4Sf8@mean-course-fmljg.mongodb.net/post',{ useNewUrlParser: true })
+mongoose.connect('mongodb+srv://marttp:' + process.env.MONGO_ATLAS_PW + '@mean-course-fmljg.mongodb.net/post',{ useNewUrlParser: true })
     .then(()=>{
         console.log('Mongoose Connect to Mongo Atlas');
     })
